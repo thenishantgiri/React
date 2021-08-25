@@ -4,12 +4,9 @@
   "description": "The Adopt Me pet adoption app",
   "main": "src/index.js",
   "scripts": {
-    "start": "parcel src/index.html -p 3000 --open",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-    "clean": "rm -rf dist/*",
-    "build:parcel": "parcel build ./src/index.html --public-url ./ --no-source-maps",
-    "build": "npm run clean && npm run build:parcel"
+    "dev": "parcel src/index.html"
   },
   "author": "Nishant Kumar Giri",
   "license": "Apache-2.0",
@@ -30,6 +27,6 @@
     "react-dom": "17.0.1"
   },
   "browserslist": [
-    "last 2 Firefox versions"
+    "last 2 Chrome versions"
   ]
 }
