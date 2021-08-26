@@ -5,9 +5,10 @@ import { withRouter } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
+import Modal from "./Modal";
 
 class Details extends Component {
-  state = { loading: true };
+  state = { loading: true, showModel: false };
 
   async componentDidMount() {
     const res = await fetch(
@@ -30,6 +31,10 @@ class Details extends Component {
     //       animal:json.pets[0].animal,
     //   });
   }
+
+  toggleModal = () => this.setState({ showModel: !this.state.showModel });
+  adopt = () => (window.location = "http://bit.ly/pet-adopt");
+
   render() {
     const {
       animal,
@@ -39,6 +44,7 @@ class Details extends Component {
       description,
       name,
       images,
+      showModel,
     } = this.state;
 
     return (
@@ -52,10 +58,40 @@ class Details extends Component {
           {/* class component context */}
           <ThemeContext.Consumer>
             {([theme]) => (
-              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+              <button
+                onClick={this.toggleModal}
+                style={{ backgroundColor: theme }}
+              >
+                Adopt {name}
+              </button>
             )}
           </ThemeContext.Consumer>
           <p>{description}</p>
+          {showModel ? (
+            <Modal>
+              <div>
+                <h1>Would you like to adopt {name}?</h1>
+                <ThemeContext.Consumer>
+                  {([theme]) => (
+                    <div className="buttons">
+                      <button
+                        style={{ backgroundColor: theme }}
+                        onClick={this.adopt}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        style={{ backgroundColor: theme }}
+                        onClick={this.toggleModal}
+                      >
+                        No, I am a monster!
+                      </button>
+                    </div>
+                  )}
+                </ThemeContext.Consumer>
+              </div>
+            </Modal>
+          ) : null}
         </div>
       </div>
     );
